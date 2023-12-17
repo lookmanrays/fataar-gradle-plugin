@@ -90,18 +90,18 @@ class DependencyProcessorPlugin implements Plugin<Project> {
     Task bundleRJarTask(def variant, String fromDir, String aarPath) {
         String taskName = "createRsJar${variant.name.capitalize()}"
         return project.getTasks().create(taskName, Jar.class, {
-            it.from fromDir
-            it.archiveName = "r-classes.jar"
-            it.destinationDir project.file("${aarPath}/libs")
+            it.from(fromDir)
+            it.archiveFileName.set("r-classes.jar")
+            it.destinationDir(project.file("${aarPath}/libs"))
         })
     }
 
     Task bundleFinalAAR(def variant, String fromPath) {
         String taskName = "createZip${variant.name.capitalize()}"
         return project.getTasks().create(taskName, Zip.class, {
-            it.from fromPath
-            it.include "**"
-            it.archiveName = archiveAarName
+            it.from(fromPath)
+            it.include("**")
+            it.archiveFileName.set(archiveAarName)
             it.destinationDir(project.file(project.projectDir.path + "/build/outputs/aar/"))
         })
     }
